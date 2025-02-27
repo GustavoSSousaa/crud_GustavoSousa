@@ -8,7 +8,7 @@ class CRUDApp:
         self.root.title("CRUD USUARIOS  ")
 
         # Criaçao de WIDGETS 
-        self.create.widgets()
+        self.create_widgets()
 
     def create_widgets(self):
         # Labels
@@ -21,13 +21,21 @@ class CRUDApp:
         tk.Label(self.root,text="User ID (for update/delete) : ").grid(row=5,column=0)
 
         # Criar as caixas para digitar os valores
-        self.nome_entry = tk.Entry(self.root).grid(row=0,column=1)
-        self.telefone_entry = tk.Entry(self.root).grid(row=1,column=1)
-        self.email_entry = tk.Entry(self.root).grid(row=2,column=1)
-        self.usuario_entry = tk.Entry(self.root).grid(row=3,column=1)
-        self.senha_entry = tk.Entry(self.root).grid(row=4,column=1)
+        self.nome_entry = tk.Entry(self.root)
+        self.telefone_entry = tk.Entry(self.root)
+        self.email_entry = tk.Entry(self.root)
+        self.usuario_entry = tk.Entry(self.root)
+        self.senha_entry = tk.Entry(self.root)
 
-        self.user_id_entry = tk.Entry(self.root).grid(row=5,column=1)
+        self.user_id_entry = tk.Entry(self.root)
+
+
+        self.nome_entry.grid(row=0, column=1)
+        self.telefone_entry.grid(row=1, column=1)
+        self.email_entry.grid(row=2, column=1)
+        self.usuario_entry.grid(row=3, column=1)
+        self.senha_entry.grid(row=4, column=1)
+        self.nome_entry.grid(row=5, column=1)
 
         # Botoes do Crud
         tk.Button(self.root,text="Cria usuario",command=self.create_user).grid(row=6,column=0,columnspan=1)
@@ -89,10 +97,10 @@ class CRUDApp:
         else:
             messagebox.showerror("Error", "ID do usuario é o obrigatório")
 
-    if __name__ == "__main__":
-        root = tk.Tk()
-        app = CRUDApp(root)
-        root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CRUDApp(root)
+    root.mainloop()
 
 
 

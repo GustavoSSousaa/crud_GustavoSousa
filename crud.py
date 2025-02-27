@@ -49,4 +49,4 @@ def delete_user(user_id):
     cursor.close()
     conn.close()
 
-    #pipintall mysql-connector-python pipintall mysql-connector-python
+    #pipintall mysql-connector-python pip install mysql-connector-python
