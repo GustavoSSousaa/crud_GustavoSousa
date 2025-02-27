@@ -35,7 +35,7 @@ class CRUDApp:
         self.email_entry.grid(row=2, column=1)
         self.usuario_entry.grid(row=3, column=1)
         self.senha_entry.grid(row=4, column=1)
-        self.nome_entry.grid(row=5, column=1)
+        self.user_id_entry.grid(row=5, column=1)
 
         # Botoes do Crud
         tk.Button(self.root,text="Cria usuario",command=self.create_user).grid(row=6,column=0,columnspan=1)
