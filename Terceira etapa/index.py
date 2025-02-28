@@ -1,5 +1,6 @@
 from tkinter import * #Importa todos os mudulos do tkinter
 from tkinter import messagebox # Importar o mudulo de widgets tematicos do tkinter
+from tkinter import ttk
 from Database import Database
 
 # Criar a janela
@@ -42,7 +43,7 @@ SenhaLabel = Label(RightFrame, text="Senha:", font=("Century Gothic", 20), bg="M
 # Cria um label para a senha
 SenhaLabel.place(x=5, y=150) # Posiciona o label no frame direito
 
-SenhaEntry = ttk.Entry(RightFrame, width=30, show="*")
+SenhaEntry = ttk.Entry(RightFrame, width=30, show="•")
 #Cria um campo de entrada para a senha
 SenhaEntry.place(x=120, y=165) # Posiciona o campo de entrada
 
@@ -52,46 +53,65 @@ def Login():
     senha = SenhaEntry.get() # Obtém o valor do campo de entrada da senha
 
 # Conectar ao banco de dados
-db = Database() # Cria uma instância da classe Database
-db.cursor.execute("""
+    db = Database() # Cria uma instância da classe Database
+    db.cursor.execute("""
 SELECT * FROM usuario1
 WHERE usuario = %s AND senha = %s""", (usuario, senha))
 # Executa a consulta SQL para verificar o usuário e a senha
-VerifyLogin = db.cursor.fetchone() # Obtém o resultado da consulta
+    VerifyLogin = db.cursor.fetchone() # Obtém o resultado da consulta
 
 # Verificar se o usuário foi encontrado
-if VerifyLogin:
-    messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
+    if VerifyLogin:
+        messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
 # Exibe mensagem de sucesso
-else:
-    messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema ") #Exibe mensagem de erro
+    else:
+        messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema ") #Exibe mensagem de erro
 
 # CRIANDO BOTÕES
 LoginButton = ttk.Button(RightFrame, text="LOGIN", width=15, command=Login) # Cria um botão de login
 LoginButton.place(x=150, y=225) # Posiciona o botão de login
 
 # FUNÇÃO PARA REGISTRAR NOVO USUÁRIO
+def Registrar():
 
 # REMOVENDO BOTÕES DE LOGIN
-LoginButton.place(x=5000) # Move o botão de login para fora da tela
-RegisterButton.place(x=5000) # Move o botão de registro para fora da tela
+    LoginButton.place(x=5000) # Move o botão de login para fora da tela
+    RegisterButton.place(x=5000) # Move o botão de registro para fora da tela
 
 # INSERINDO WIDGETS DE CADASTRO
-NomeLabel = Label(RightFrame, text="Nome:", font=("Century Gothic", 20), bg="MIDNIGHTBLUE", fg="White")
+    NomeLabel = Label(RightFrame, text="Nome:", font=("Century Gothic", 20), bg="MIDNIGHTBLUE", fg="White")
 # Cria um label para o nome
-NomeLabel.place(x=5, y=5) # Posiciona o label no frame direito
+    NomeLabel.place(x=5, y=5) # Posiciona o label no frame direito
 
-NomeEntry = ttk.Entry(RightFrame, width=30) # Cria um campo de entrada para o nome
-NomeEntry.place(x=120, y=20) # Posiciona o campo de entrada
+    NomeEntry = ttk.Entry(RightFrame, width=30) # Cria um campo de entrada para o nome
+    NomeEntry.place(x=120, y=20) # Posiciona o campo de entrada
 
-EmailLabel = Label(RightFrame, text="Email:", font=("Century Gothic", 20), bg="MIDNIGHTBLUE", fg="White")
+    EmailLabel = Label(RightFrame, text="Email:", font=("Century Gothic", 20), bg="MIDNIGHTBLUE", fg="White")
 # Cria um label para o email
-EmailLabel.place(x=5, y=40) # Posiciona o label no frame direito
+    EmailLabel.place(x=5, y=40) # Posiciona o label no frame direito
 
-EmailEntry = ttk.Entry(RightFrame, width=30) # Cria um campo de entrada para o email
-EmailEntry.place(x=120, y=55) # Posiciona o campo de entrada
+    EmailEntry = ttk.Entry(RightFrame, width=30) # Cria um campo de entrada para o email
+    EmailEntry.place(x=120, y=55) # Posiciona o campo de entrada
 
 # FUNÇÃO PARA REGISTRAR NO BANCO DE DADOS
-def RegistrarNoBanco():
-    nome = NomeEntry.get() # Obtém o valor do
+    def RegistrarNoBanco():
+        nome = NomeEntry.get() # Obtém o valor do campo de entrada do nome
+        email = EmailEntry.get() # Obtém o valor do campo de entrada do email
+        usuario = UsuarioEntry.get() # Obtém o valor do campo de entrada do usuario
+        senha = SenhaEntry.get() # Obtém o valordo campo de entrada da senha
+
+        if nome == "" or email == "" or usuario == "" or senha == "":
+            messagebox.showerror(title="Erro no Registro",message="PREENCHA TODOS OS CAMPOS") # Exibe mensagm de erro
+        else:
+            db = Database() # Cria uma instância da classe Database
+            db.RegistrarNoBanco(nome, email, usuario, senha) # Chama o método para registrar no banco de dados
+            messagebox.showinfo("Sucesso","Usuário registrado com sucesso!") # Exibe mensagem de Sucesso
+
+            # Limpar os campos após o registro
+            NomeEntry.delete(0, END) # Limpa o campo de entrada do nome
+            EmailEntry.delete(0, END) # Limpa o campo de entrada do email
+            UsuarioEntry.delete(0, END) # Limpa o campo de entrada do usuario
+            SenhaEntry.delete(0, END) # Limpa o campo de entrada do senha
+    
+    
 
