@@ -1,7 +1,7 @@
 from tkinter import * #Importa todos os mudulos do tkinter
 from tkinter import messagebox # Importar o mudulo de widgets tematicos do tkinter
 from tkinter import ttk
-from Database import Database
+from DataBase import Database
 
 # Criar a janela
 jan = Tk()
@@ -112,6 +112,35 @@ def Registrar():
             EmailEntry.delete(0, END) # Limpa o campo de entrada do email
             UsuarioEntry.delete(0, END) # Limpa o campo de entrada do usuario
             SenhaEntry.delete(0, END) # Limpa o campo de entrada do senha
+
+    Register = ttk.Button(RightFrame, text="REGISTRAR", width=15, command=RegistrarNoBanco) # Cria um botão de registro
+    Register.place(x=150, y=225) # Posiciona o botão de registro
+
+    # Função para voltar a tela de login
+    
+    def VoltarLogin():
+        # Removendo widgets de cadastro
+        NomeLabel.place(x=5000) # Mova o label do nome para fora da tela
+        NomeEntry.place(x=5000) # move o campo de entrada do nome para fora da tela
+        EmailLabel(x=5000) # Move o label do email para fora da tela
+        EmailEntry(x=5000) # Move o campo de entrada do email para fora da tela
+        Register.place(x=5000) # Move o botão de registro para fora da tela
+        Voltar.place(x=5000) # Move o botão de voltar para fora da tela
+
+        # Trazendo de volta os widgets
+        LoginButton.place(x=150) # Traz o botão de login de volta para a tela
+        RegisterButton.place(x=150) # Traz o botão de registro de volta para a tela
+
+    Voltar = ttk.Button(RightFrame, text="VOLTAR", width=15, command=VoltarLogin) # Cria um botão de voltar
+    Voltar.place(x=150, y=255) # Posiciona o botão de voltar
+
+    Registrar.Button = ttk.Button(RightFrame, text="REGISTRAR", width=15, command=Registrar)
+    Registrar.Button.place(x=150, y=255) # Posiciona o botão de registro
+
+    # Inicia o loop principal da aplicação
+    jan.mainloop() # Inicia o loop principal da aplicação
+
+
     
     
 
