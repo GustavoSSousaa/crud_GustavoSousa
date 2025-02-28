@@ -1,7 +1,7 @@
 from tkinter import * #Importa todos os mudulos do tkinter
 from tkinter import messagebox # Importar o mudulo de widgets tematicos do tkinter
 from tkinter import ttk
-from DataBase import Database
+from DataBase import DataBase
 
 # Criar a janela
 jan = Tk()
@@ -11,13 +11,13 @@ jan.configure(background="white")
 jan.resizable(width=False, height=False)
 
 # COMANDO PARA DEIXAR A TELA TRANSPARENTE
-jan.attributes("alpha", 0.9) # Define a transparência da janela (0.0 a 1.0)
+jan.attributes("-alpha", 0.9) # Define a transparência da janela (0.0 a 1.0)
 
 # DEFINIR ÍCONE DA JANELA
-jan.iconbitmap(default="icons/1LogoIcon.ico") # Define o ícone da janela
+#jan.iconbitmap(default="icons/1LogoIcon.ico") # Define o ícone da janela
 
 # CARREGAR IMAGEM
-logo = PhotoImage(file="icons/LogoSergio.png") # Carrega a imagem do logo
+#logo = PhotoImage(file="icons/LogoSergio.png") # Carrega a imagem do logo
 
 # CRIAR FRAME
 LeftFrame = Frame(jan, width=200, height=300, bg="MIDNIGHTBLUE", relief="raise") # Cria um frame à esquerda
@@ -27,8 +27,8 @@ RightFrame = Frame(jan, width=395, height=300, bg="MIDNIGHTBLUE", relief="raise"
 RightFrame.pack(side=RIGHT) # Posiciona o frame à direita
 
 # ADICIONAR LOGO
-LogoLabel = Label(LeftFrame, image=logo, bg="MIDNIGHTBLUE") # Cria um label para a imagem do logo
-LogoLabel.place(x=50, y=100) # Posiciona o label no frame esquerdo
+#LogoLabel = Label(LeftFrame, image=logo, bg="MIDNIGHTBLUE") # Cria um label para a imagem do logo
+#LogoLabel.place(x=50, y=100) # Posiciona o label no frame esquerdo
 
 # ADICIONAR CAMPOS DE USUÁRIO E SENHA
 UsuarioLabel = Label(RightFrame, text="Usuário:", font=("Century Gothic", 20), bg="MIDNIGHTBLUE", fg="White")
@@ -53,9 +53,9 @@ def Login():
     senha = SenhaEntry.get() # Obtém o valor do campo de entrada da senha
 
 # Conectar ao banco de dados
-    db = Database() # Cria uma instância da classe Database
+    db = DataBase() # Cria uma instância da classe Database
     db.cursor.execute("""
-SELECT * FROM usuario1
+SELECT * FROM usuario
 WHERE usuario = %s AND senha = %s""", (usuario, senha))
 # Executa a consulta SQL para verificar o usuário e a senha
     VerifyLogin = db.cursor.fetchone() # Obtém o resultado da consulta
@@ -103,7 +103,7 @@ def Registrar():
         if nome == "" or email == "" or usuario == "" or senha == "":
             messagebox.showerror(title="Erro no Registro",message="PREENCHA TODOS OS CAMPOS") # Exibe mensagm de erro
         else:
-            db = Database() # Cria uma instância da classe Database
+            db = DataBase() # Cria uma instância da classe Database
             db.RegistrarNoBanco(nome, email, usuario, senha) # Chama o método para registrar no banco de dados
             messagebox.showinfo("Sucesso","Usuário registrado com sucesso!") # Exibe mensagem de Sucesso
 
@@ -122,8 +122,8 @@ def Registrar():
         # Removendo widgets de cadastro
         NomeLabel.place(x=5000) # Mova o label do nome para fora da tela
         NomeEntry.place(x=5000) # move o campo de entrada do nome para fora da tela
-        EmailLabel(x=5000) # Move o label do email para fora da tela
-        EmailEntry(x=5000) # Move o campo de entrada do email para fora da tela
+        EmailLabel.place(x=5000) # Move o label do email para fora da tela
+        EmailEntry.place(x=5000) # Move o campo de entrada do email para fora da tela
         Register.place(x=5000) # Move o botão de registro para fora da tela
         Voltar.place(x=5000) # Move o botão de voltar para fora da tela
 
@@ -134,11 +134,11 @@ def Registrar():
     Voltar = ttk.Button(RightFrame, text="VOLTAR", width=15, command=VoltarLogin) # Cria um botão de voltar
     Voltar.place(x=150, y=255) # Posiciona o botão de voltar
 
-    Registrar.Button = ttk.Button(RightFrame, text="REGISTRAR", width=15, command=Registrar)
-    Registrar.Button.place(x=150, y=255) # Posiciona o botão de registro
+RegisterButton = ttk.Button(RightFrame, text="REGISTRAR", width=15, command=Registrar)
+RegisterButton.place(x=150, y=255) # Posiciona o botão de registro
 
     # Inicia o loop principal da aplicação
-    jan.mainloop() # Inicia o loop principal da aplicação
+jan.mainloop() # Inicia o loop principal da aplicação
 
 
     
